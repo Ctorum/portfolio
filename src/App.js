@@ -1,8 +1,8 @@
+import Routes from "./routes";
+
 function App() {
   return (
-    <div>
-      <h1>Some text here!</h1>
-    </div>
+    <Routes></Routes>
   );
 }
 
