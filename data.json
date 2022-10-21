@@ -1,0 +1,116 @@
+{
+  "name": "Vitor Rezende",
+  "landing": {
+    "title": "Hi, I'm Vitor",
+    "subtitles": [
+      "Mobile Developer 🌐",
+      "Software Engineer",
+      "Getting better at TypeScript",
+      "Beginner in Phoenix 🐤",
+      "Just getting started 📈"
+    ],
+    "professionalDetails": [
+      {
+        "alt": "vitor-hugo-rezende",
+        "icon": "linkedin",
+        "link": "https://www.linkedin.com/in/rezvitor/"
+      },
+      {
+        "alt": "ctorum",
+        "icon": "github",
+        "link": "https://github.com/Ctorum"
+      },
+      {
+        "alt": "Email",
+        "icon": "gmail",
+        "link": "mailto:dev.rezendevitor@gmail.com"
+      }
+    ]
+  },
+  "skills": {
+    "Languages known": ["JavaScript", "TypeScript", "Elixir"],
+    "Mobile, Front, Back": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      {
+        "alt": "AWS",
+        "icon": "amazonaws"
+      },
+      "Heroku"
+    ]
+  },
+  "projects": {
+    "baseURI": "https://api.github.com/repos/Ctorum/",
+    "repositories": [
+      "bodybearweb",
+      "Triforce_Chess",
+      "Be-the-hero",
+      "Elixir-NLW04"
+    ]
+  },
+  "experience": {
+    "Work Experience": [
+      {
+        "organization": "Guilu",
+        "role": "Web & Mobile Developer",
+        "type": "Part-time",
+        "startDate": "2020-06-01",
+        "endDate": "2020-10-01",
+        "city": "Sao Paulo",
+        "state": "Sao Paulo",
+        "country": "Brazil",
+        "url": "https://www.linkedin.com/company/guilu/",
+        "thumbnail": "/guilu.jpg"
+      },
+      {
+        "organization": "Criative",
+        "role": "Mobile Engineer Jr",
+        "type": "Full-Time",
+        "startDate": "2022-03-01",
+        "endDate": "2022-10-01",
+        "city": "Sao Paulo",
+        "state": "Sao Paulo",
+        "country": "Brazil",
+        "url": "https://www.linkedin.com/company/criativeapp/",
+        "thumbnail": "/criative.jpg"
+      }
+    ]
+  },
+  "about": {
+    "description": "Growing up every day!\nTrying to get better and learn something new!",
+    "picture": "/profile.jpg",
+    "social": [
+      {
+        "alt": "vitoverdades",
+        "icon": "instagram",
+        "link": "https://www.instagram.com/vitoverdades/"
+      },
+      {
+        "alt": "Vito Vito#8302",
+        "icon": "discord",
+        "link": "https://discord.com/users/Vito%20Vito#8302"
+      }
+    ]
+  },
+  "theme": {
+    "light": {
+      "palette": {
+        "type": "light",
+        "background": {
+          "paper": "#fff",
+          "default": "#fafafa"
+        }
+      }
+    },
+    "dark": {
+      "palette": {
+        "type": "dark",
+        "background": {
+          "paper": "#303030",
+          "default": "#212121"
+        }
+      }
+    }
+  }
+}
