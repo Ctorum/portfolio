@@ -74,6 +74,17 @@
         "country": "Brazil",
         "url": "https://www.linkedin.com/company/criativeapp/",
         "thumbnail": "/criative.jpg"
+      },
+      {
+        "organization": "LeParse",
+        "role": "Mobile Engineer/Partner",
+        "type": "Self-Employed",
+        "startDate": "2022-08-01",
+        "city": "Sao Paulo",
+        "state": "Sao Paulo",
+        "country": "Brazil",
+        "url": "https://www.linkedin.com/company/leparseltda/",
+        "thumbnail": "/leparse.jpg"
       }
     ]
   },
