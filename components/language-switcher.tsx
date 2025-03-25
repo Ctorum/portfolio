@@ -1,26 +1,29 @@
 "use client"
 
-import { useLanguage } from "@/context/language-context"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Globe } from "lucide-react"
 
-export default function LanguageSwitcher() {
-  const { language, setLanguage } = useLanguage()
+interface LanguageSwitcherProps {
+  currentLang: "en" | "pt"
+}
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "pt" : "en")
-  }
+export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps) {
+  const targetLang = currentLang === "en" ? "pt" : "en"
+  const targetLabel = currentLang === "en" ? "PT-BR" : "EN"
 
   return (
     <div className="fixed top-4 right-4 z-50">
       <Button
         variant="outline"
         size="sm"
-        onClick={toggleLanguage}
-        className="border-blue-500/30 text-zinc-100 hover:bg-zinc-800 flex items-center gap-2"
+        asChild
+        className="bg-zinc-800/90 border-blue-500 text-white hover:bg-blue-600 hover:text-white flex items-center gap-2 shadow-md shadow-blue-500/20"
       >
-        <Globe className="h-4 w-4" />
-        {language === "en" ? "PT-BR" : "EN"}
+        <Link href={`/${targetLang}`}>
+          <Globe className="h-4 w-4" />
+          {targetLabel}
+        </Link>
       </Button>
     </div>
   )

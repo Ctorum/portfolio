@@ -1,14 +1,62 @@
 "use client"
 
+import { useMemo } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ExperienceCard from "@/components/ui/experience-card"
 import EducationCard from "@/components/ui/education-card"
-import { useLanguage } from "@/context/language-context"
 import { useAnimationOnScroll } from "@/hooks/use-animation-on-scroll"
 
-export default function Experience() {
-  const { t } = useLanguage()
+interface ExperienceTranslations {
+  title: string
+  workTab: string
+  educationTab: string
+  location: string
+  companies: any
+  education: any
+}
+
+interface ExperienceProps {
+  translations: ExperienceTranslations
+}
+
+export default function Experience({ translations: t }: ExperienceProps) {
   const [sectionRef, isVisible] = useAnimationOnScroll<HTMLElement>()
+
+  const workExperience = useMemo(
+    () => [
+      { company: t.companies.mbras, delay: 0 },
+      { company: t.companies.ibvi, delay: 100 },
+      { company: t.companies.stMarche, delay: 200 },
+      { company: t.companies.criative, delay: 300 },
+      { company: t.companies.rzti, delay: 400 },
+      { company: t.companies.guilu, delay: 500 },
+    ],
+    [t.companies],
+  )
+
+  const educationItems = useMemo(
+    () => [
+      {
+        institution: t.education.unasp.institution,
+        degree: t.education.unasp.degreeEngineering,
+        period: t.education.unasp.periodEngineering,
+        delay: 0,
+      },
+      {
+        institution: t.education.unasp.institution,
+        degree: t.education.unasp.degreeHighSchool,
+        period: t.education.unasp.periodHighSchool,
+        delay: 100,
+      },
+      {
+        institution: t.education.rocketseat.institution,
+        degree: t.education.rocketseat.degree,
+        period: t.education.rocketseat.period,
+        delay: 200,
+      },
+    ],
+    [t.education],
+  )
 
   return (
     <section
@@ -19,7 +67,7 @@ export default function Experience() {
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12 text-center">
-          <span className="text-blue-500">&lt;</span> {t.experience.title} <span className="text-blue-500">/&gt;</span>
+          <span className="text-blue-500">&lt;</span> {t.title} <span className="text-blue-500">/&gt;</span>
         </h2>
 
         <Tabs defaultValue="experience" className="w-full max-w-4xl mx-auto">
@@ -28,25 +76,18 @@ export default function Experience() {
               value="experience"
               className="data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all duration-300"
             >
-              {t.experience.workTab}
+              {t.workTab}
             </TabsTrigger>
             <TabsTrigger
               value="education"
               className="data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all duration-300"
             >
-              {t.experience.educationTab}
+              {t.educationTab}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="experience" className="space-y-6">
-            {[
-              { company: t.companies.mbras, delay: 0 },
-              { company: t.companies.ibvi, delay: 100 },
-              { company: t.companies.stMarche, delay: 200 },
-              { company: t.companies.criative, delay: 300 },
-              { company: t.companies.rzti, delay: 400 },
-              { company: t.companies.guilu, delay: 500 },
-            ].map((item, index) => (
+            {workExperience.map((item, index) => (
               <div
                 key={index}
                 className={`transition-all duration-700 ${
@@ -58,7 +99,7 @@ export default function Experience() {
                   company={item.company.name}
                   position={item.company.position}
                   period={item.company.period}
-                  location={t.experience.location}
+                  location={t.location}
                   responsibilities={item.company.responsibilities}
                 />
               </div>
@@ -66,26 +107,7 @@ export default function Experience() {
           </TabsContent>
 
           <TabsContent value="education" className="space-y-6">
-            {[
-              {
-                institution: t.education.unasp.institution,
-                degree: t.education.unasp.degreeEngineering,
-                period: t.education.unasp.periodEngineering,
-                delay: 0,
-              },
-              {
-                institution: t.education.unasp.institution,
-                degree: t.education.unasp.degreeHighSchool,
-                period: t.education.unasp.periodHighSchool,
-                delay: 100,
-              },
-              {
-                institution: t.education.rocketseat.institution,
-                degree: t.education.rocketseat.degree,
-                period: t.education.rocketseat.period,
-                delay: 200,
-              },
-            ].map((item, index) => (
+            {educationItems.map((item, index) => (
               <div
                 key={index}
                 className={`transition-all duration-700 ${
@@ -97,7 +119,7 @@ export default function Experience() {
                   institution={item.institution}
                   degree={item.degree}
                   period={item.period}
-                  location={t.experience.location}
+                  location={t.location}
                 />
               </div>
             ))}

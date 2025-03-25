@@ -33,11 +33,11 @@ export default function ScrollToTop() {
         variant="outline"
         size="icon"
         onClick={scrollToTop}
-        className={`rounded-full bg-blue-600 hover:bg-blue-700 border-none transition-all duration-300 ${
+        className={`rounded-full bg-blue-600 hover:bg-blue-700 border-none shadow-md shadow-blue-500/20 transition-all duration-300 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
         }`}
       >
-        <ArrowUp className="h-5 w-5" />
+        <ArrowUp className="h-5 w-5 text-white" />
         <span className="sr-only">Scroll to top</span>
       </Button>
     </div>

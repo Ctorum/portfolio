@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import {
   Code,
   Layout,
@@ -17,48 +17,70 @@ import {
   Globe,
   Workflow,
 } from "lucide-react"
-import { useLanguage } from "@/context/language-context"
 import { Badge } from "@/components/ui/badge"
 import { useAnimationOnScroll } from "@/hooks/use-animation-on-scroll"
 
-export default function Skills() {
-  const { t } = useLanguage()
+interface SkillsCategories {
+  languages: string
+  frontend: string
+  backend: string
+  cloud: string
+  databases: string
+  ai: string
+  mobile: string
+  tools: string
+}
+
+interface SkillsTranslations {
+  title: string
+  featuredTitle: string
+  categories: SkillsCategories
+}
+
+interface SkillsProps {
+  translations: SkillsTranslations
+}
+
+export default function Skills({ translations: t }: SkillsProps) {
   const [sectionRef, isVisible] = useAnimationOnScroll<HTMLElement>()
   const [animatedSkills, setAnimatedSkills] = useState<{ [key: string]: number }>({})
 
   // Featured skills with higher prominence
-  const featuredSkills = [
-    {
-      name: "TypeScript",
-      icon: <FileCode className="h-6 w-6" />,
-      level: 95,
-      color: "bg-blue-500",
-    },
-    {
-      name: "Python",
-      icon: <Terminal className="h-6 w-6" />,
-      level: 90,
-      color: "bg-yellow-500",
-    },
-    {
-      name: "React Native",
-      icon: <Smartphone className="h-6 w-6" />,
-      level: 95,
-      color: "bg-cyan-500",
-    },
-    {
-      name: "Terraform",
-      icon: <Workflow className="h-6 w-6" />,
-      level: 85,
-      color: "bg-purple-500",
-    },
-    {
-      name: "PyTorch",
-      icon: <Brain className="h-6 w-6" />,
-      level: 80,
-      color: "bg-orange-500",
-    },
-  ]
+  const featuredSkills = useMemo(
+    () => [
+      {
+        name: "TypeScript",
+        icon: <FileCode className="h-6 w-6" />,
+        level: 95,
+        color: "bg-blue-500",
+      },
+      {
+        name: "Python",
+        icon: <Terminal className="h-6 w-6" />,
+        level: 90,
+        color: "bg-yellow-500",
+      },
+      {
+        name: "React Native",
+        icon: <Smartphone className="h-6 w-6" />,
+        level: 95,
+        color: "bg-cyan-500",
+      },
+      {
+        name: "Terraform",
+        icon: <Workflow className="h-6 w-6" />,
+        level: 85,
+        color: "bg-purple-500",
+      },
+      {
+        name: "PyTorch",
+        icon: <Brain className="h-6 w-6" />,
+        level: 80,
+        color: "bg-orange-500",
+      },
+    ],
+    [],
+  )
 
   // Animate skill bars when they become visible
   useEffect(() => {
@@ -77,89 +99,92 @@ export default function Skills() {
     } else {
       setAnimatedSkills({})
     }
-  }, [isVisible, featuredSkills])
+  }, [isVisible]) // Remove featuredSkills from dependencies
 
   // Other skills organized by category
-  const skillCategories = [
-    {
-      title: t.skills.categories.languages,
-      skills: [
-        { name: "JavaScript", icon: <Code className="h-4 w-4" /> },
-        { name: "GO", icon: <FileCode className="h-4 w-4" /> },
-        { name: "Rust", icon: <FileCode className="h-4 w-4" /> },
-      ],
-      icon: <Code className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.frontend,
-      skills: [
-        { name: "React.js", icon: <Layout className="h-4 w-4" /> },
-        { name: "Expo", icon: <Smartphone className="h-4 w-4" /> },
-        { name: "Next.js", icon: <Layout className="h-4 w-4" /> },
-        { name: "Tailwind CSS", icon: <Layout className="h-4 w-4" /> },
-      ],
-      icon: <Layout className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.backend,
-      skills: [
-        { name: "Node.js", icon: <Server className="h-4 w-4" /> },
-        { name: "Express", icon: <Server className="h-4 w-4" /> },
-        { name: "FastAPI", icon: <Server className="h-4 w-4" /> },
-        { name: "Ruby on Rails", icon: <Server className="h-4 w-4" /> },
-      ],
-      icon: <Server className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.cloud,
-      skills: [
-        { name: "AWS", icon: <Cloud className="h-4 w-4" /> },
-        { name: "GCP", icon: <Cloud className="h-4 w-4" /> },
-        { name: "Serverless", icon: <Cloud className="h-4 w-4" /> },
-        { name: "LocalStack", icon: <Layers className="h-4 w-4" /> },
-      ],
-      icon: <Cloud className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.databases,
-      skills: [
-        { name: "SQL", icon: <Database className="h-4 w-4" /> },
-        { name: "NoSQL", icon: <Database className="h-4 w-4" /> },
-        { name: "Relational Databases", icon: <Database className="h-4 w-4" /> },
-        { name: "Non-relational Databases", icon: <Database className="h-4 w-4" /> },
-      ],
-      icon: <Database className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.ai,
-      skills: [
-        { name: "TensorFlow", icon: <Brain className="h-4 w-4" /> },
-        { name: "AI Models", icon: <Cpu className="h-4 w-4" /> },
-        { name: "Intelligent Applications", icon: <Brain className="h-4 w-4" /> },
-      ],
-      icon: <Brain className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.mobile,
-      skills: [
-        { name: "iOS", icon: <Smartphone className="h-4 w-4" /> },
-        { name: "Android", icon: <Smartphone className="h-4 w-4" /> },
-        { name: "Cross-platform", icon: <Globe className="h-4 w-4" /> },
-        { name: "Native Modules", icon: <Cpu className="h-4 w-4" /> },
-      ],
-      icon: <Smartphone className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: t.skills.categories.tools,
-      skills: [
-        { name: "Git", icon: <Tool className="h-4 w-4" /> },
-        { name: "Linux (Arch)", icon: <Terminal className="h-4 w-4" /> },
-        { name: "Version Control", icon: <Tool className="h-4 w-4" /> },
-        { name: "CI/CD", icon: <Workflow className="h-4 w-4" /> },
-      ],
-      icon: <Tool className="h-6 w-6 text-blue-500" />,
-    },
-  ]
+  const skillCategories = useMemo(
+    () => [
+      {
+        title: t.categories.languages,
+        skills: [
+          { name: "JavaScript", icon: <Code className="h-4 w-4" /> },
+          { name: "GO", icon: <FileCode className="h-4 w-4" /> },
+          { name: "Rust", icon: <FileCode className="h-4 w-4" /> },
+        ],
+        icon: <Code className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.frontend,
+        skills: [
+          { name: "React.js", icon: <Layout className="h-4 w-4" /> },
+          { name: "Expo", icon: <Smartphone className="h-4 w-4" /> },
+          { name: "Next.js", icon: <Layout className="h-4 w-4" /> },
+          { name: "Tailwind CSS", icon: <Layout className="h-4 w-4" /> },
+        ],
+        icon: <Layout className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.backend,
+        skills: [
+          { name: "Node.js", icon: <Server className="h-4 w-4" /> },
+          { name: "Express", icon: <Server className="h-4 w-4" /> },
+          { name: "FastAPI", icon: <Server className="h-4 w-4" /> },
+          { name: "Ruby on Rails", icon: <Server className="h-4 w-4" /> },
+        ],
+        icon: <Server className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.cloud,
+        skills: [
+          { name: "AWS", icon: <Cloud className="h-4 w-4" /> },
+          { name: "GCP", icon: <Cloud className="h-4 w-4" /> },
+          { name: "Serverless", icon: <Cloud className="h-4 w-4" /> },
+          { name: "LocalStack", icon: <Layers className="h-4 w-4" /> },
+        ],
+        icon: <Cloud className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.databases,
+        skills: [
+          { name: "SQL", icon: <Database className="h-4 w-4" /> },
+          { name: "NoSQL", icon: <Database className="h-4 w-4" /> },
+          { name: "Relational Databases", icon: <Database className="h-4 w-4" /> },
+          { name: "Non-relational Databases", icon: <Database className="h-4 w-4" /> },
+        ],
+        icon: <Database className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.ai,
+        skills: [
+          { name: "TensorFlow", icon: <Brain className="h-4 w-4" /> },
+          { name: "AI Models", icon: <Cpu className="h-4 w-4" /> },
+          { name: "Intelligent Applications", icon: <Brain className="h-4 w-4" /> },
+        ],
+        icon: <Brain className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.mobile,
+        skills: [
+          { name: "iOS", icon: <Smartphone className="h-4 w-4" /> },
+          { name: "Android", icon: <Smartphone className="h-4 w-4" /> },
+          { name: "Cross-platform", icon: <Globe className="h-4 w-4" /> },
+          { name: "Native Modules", icon: <Cpu className="h-4 w-4" /> },
+        ],
+        icon: <Smartphone className="h-6 w-6 text-blue-500" />,
+      },
+      {
+        title: t.categories.tools,
+        skills: [
+          { name: "Git", icon: <Tool className="h-4 w-4" /> },
+          { name: "Linux (Arch)", icon: <Terminal className="h-4 w-4" /> },
+          { name: "Version Control", icon: <Tool className="h-4 w-4" /> },
+          { name: "CI/CD", icon: <Workflow className="h-4 w-4" /> },
+        ],
+        icon: <Tool className="h-6 w-6 text-blue-500" />,
+      },
+    ],
+    [t.categories],
+  )
 
   return (
     <section
@@ -170,12 +195,12 @@ export default function Skills() {
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12 text-center">
-          <span className="text-blue-500">&lt;</span> {t.skills.title} <span className="text-blue-500">/&gt;</span>
+          <span className="text-blue-500">&lt;</span> {t.title} <span className="text-blue-500">/&gt;</span>
         </h2>
 
         {/* Featured Skills */}
         <div className="max-w-4xl mx-auto mb-16">
-          <h3 className="text-2xl font-semibold mb-8 text-center">{t.skills.featuredTitle}</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-center">{t.featuredTitle}</h3>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {featuredSkills.map((skill, index) => (
               <div

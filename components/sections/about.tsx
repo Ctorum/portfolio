@@ -1,41 +1,62 @@
 "use client"
 
-import { useLanguage } from "@/context/language-context"
+import { useMemo } from "react"
 import { Code, Server, Smartphone, Cloud, Brain } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useAnimationOnScroll } from "@/hooks/use-animation-on-scroll"
 
-export default function About() {
-  const { t } = useLanguage()
+interface AboutHighlights {
+  fullstack: string
+  backend: string
+  mobile: string
+  cloud: string
+  ai: string
+}
+
+interface AboutTranslations {
+  title: string
+  summary: string
+  highlights: AboutHighlights
+  interests: string[]
+}
+
+interface AboutProps {
+  translations: AboutTranslations
+}
+
+export default function About({ translations: t }: AboutProps) {
   const [sectionRef, isVisible] = useAnimationOnScroll<HTMLElement>()
 
-  const highlights = [
-    {
-      icon: <Code className="h-5 w-5 text-blue-500" />,
-      title: "Full-Stack Developer",
-      description: t.about.highlights.fullstack,
-    },
-    {
-      icon: <Server className="h-5 w-5 text-blue-500" />,
-      title: "Back-End Specialist",
-      description: t.about.highlights.backend,
-    },
-    {
-      icon: <Smartphone className="h-5 w-5 text-blue-500" />,
-      title: "Mobile Expert",
-      description: t.about.highlights.mobile,
-    },
-    {
-      icon: <Cloud className="h-5 w-5 text-blue-500" />,
-      title: "Cloud Architecture",
-      description: t.about.highlights.cloud,
-    },
-    {
-      icon: <Brain className="h-5 w-5 text-blue-500" />,
-      title: "AI Enthusiast",
-      description: t.about.highlights.ai,
-    },
-  ]
+  const highlights = useMemo(
+    () => [
+      {
+        icon: <Code className="h-5 w-5 text-blue-500" />,
+        title: "Full-Stack Developer",
+        description: t.highlights.fullstack,
+      },
+      {
+        icon: <Server className="h-5 w-5 text-blue-500" />,
+        title: "Back-End Specialist",
+        description: t.highlights.backend,
+      },
+      {
+        icon: <Smartphone className="h-5 w-5 text-blue-500" />,
+        title: "Mobile Expert",
+        description: t.highlights.mobile,
+      },
+      {
+        icon: <Cloud className="h-5 w-5 text-blue-500" />,
+        title: "Cloud Architecture",
+        description: t.highlights.cloud,
+      },
+      {
+        icon: <Brain className="h-5 w-5 text-blue-500" />,
+        title: "AI Enthusiast",
+        description: t.highlights.ai,
+      },
+    ],
+    [t.highlights],
+  )
 
   return (
     <section
@@ -46,7 +67,7 @@ export default function About() {
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">
-          <span className="text-blue-500">&lt;</span> {t.about.title} <span className="text-blue-500">/&gt;</span>
+          <span className="text-blue-500">&lt;</span> {t.title} <span className="text-blue-500">/&gt;</span>
         </h2>
 
         <div className="max-w-5xl mx-auto">
@@ -74,9 +95,9 @@ export default function About() {
             }`}
             style={{ transitionDelay: "500ms" }}
           >
-            <p className="text-zinc-300 leading-relaxed mb-4 max-w-3xl mx-auto">{t.about.summary}</p>
+            <p className="text-zinc-300 leading-relaxed mb-4 max-w-3xl mx-auto">{t.summary}</p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              {t.about.interests.map((interest, index) => (
+              {t.interests.map((interest, index) => (
                 <Badge
                   key={index}
                   className={`bg-zinc-800 text-zinc-300 transition-all duration-500 ${
