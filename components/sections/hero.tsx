@@ -5,13 +5,23 @@ import Image from "next/image"
 import { Github, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { useLanguage } from "@/context/language-context"
 
-export default function Hero() {
-  const { t } = useLanguage()
+interface HeroTranslations {
+  title: string
+  subtitle: string
+  description: string
+  contactButton: string
+  projectsButton: string
+}
+
+interface HeroProps {
+  translations: HeroTranslations
+}
+
+export default function Hero({ translations: t }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [typedText, setTypedText] = useState("")
-  const fullText = t.hero.title.split(" ")[0]
+  const fullText = t.title.split(" ")[0]
   const typingSpeed = 150
   const typingRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -53,7 +63,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.2),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.2),transparent_50%)] animate-pulse"></div>
       <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div
@@ -61,17 +71,17 @@ export default function Hero() {
           >
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
               <span className="text-blue-500 inline-block">{typedText}</span>
-              <span className="inline-block">{" " + t.hero.title.split(" ").slice(1).join(" ")}</span>
+              <span className="inline-block">{" " + t.title.split(" ").slice(1).join(" ")}</span>
             </h1>
             <h2
               className={`text-2xl md:text-3xl font-medium text-zinc-400 mb-6 transition-all duration-700 delay-300 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              {t.hero.subtitle}
+              {t.subtitle}
             </h2>
             <p
               className={`text-zinc-300 mb-8 text-lg transition-all duration-700 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              {t.hero.description}
+              {t.description}
             </p>
             <div
               className={`flex flex-wrap gap-3 mb-8 transition-all duration-700 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -90,14 +100,14 @@ export default function Hero() {
             <div
               className={`flex flex-wrap gap-4 transition-all duration-700 delay-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              <Button className="bg-blue-600 hover:bg-blue-700 transition-transform hover:scale-105">
-                <Mail className="mr-2 h-4 w-4" /> {t.hero.contactButton}
+              <Button className="bg-blue-600 hover:bg-blue-700 transition-transform hover:scale-105 shadow-md shadow-blue-600/20">
+                <Mail className="mr-2 h-4 w-4" /> {t.contactButton}
               </Button>
               <Button
                 variant="outline"
-                className="border-blue-500/30 text-zinc-100 hover:bg-zinc-800 transition-transform hover:scale-105"
+                className="bg-zinc-800 border-blue-500 text-white hover:bg-blue-600 hover:text-white transition-transform hover:scale-105 shadow-md shadow-blue-500/20"
               >
-                <Github className="mr-2 h-4 w-4" /> {t.hero.projectsButton}
+                <Github className="mr-2 h-4 w-4" /> {t.projectsButton}
               </Button>
             </div>
           </div>

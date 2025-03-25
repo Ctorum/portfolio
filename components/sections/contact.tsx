@@ -1,49 +1,68 @@
 "use client"
 
+import { useMemo } from "react"
 import Link from "next/link"
 import { Phone, Mail, Github, MapPin, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/context/language-context"
 import { useAnimationOnScroll } from "@/hooks/use-animation-on-scroll"
 
-export default function Contact() {
-  const { t } = useLanguage()
+interface ContactTranslations {
+  title: string
+  phone: string
+  email: string
+  portfolio: string
+  location: string
+  formTitle: string
+  nameLabel: string
+  emailLabel: string
+  messageLabel: string
+  sendButton: string
+}
+
+interface ContactProps {
+  translations: ContactTranslations
+}
+
+export default function Contact({ translations: t }: ContactProps) {
   const [sectionRef, isVisible] = useAnimationOnScroll<HTMLElement>()
 
-  const contactItems = [
-    {
-      icon: <Phone className="h-5 w-5 text-blue-500" />,
-      title: t.contact.phone,
-      content: "+55 (11) 9 8608-0044",
-      delay: 0,
-    },
-    {
-      icon: <Mail className="h-5 w-5 text-blue-500" />,
-      title: t.contact.email,
-      content: "dev.rezendevitor@gmail.com",
-      delay: 100,
-    },
-    {
-      icon: <Github className="h-5 w-5 text-blue-500" />,
-      title: t.contact.portfolio,
-      content: (
-        <Link
-          href="https://ctorum.github.io/portfolio"
-          target="_blank"
-          className="text-zinc-100 flex items-center hover:text-blue-400 transition-colors"
-        >
-          ctorum.github.io/portfolio <ExternalLink className="ml-1 h-3 w-3" />
-        </Link>
-      ),
-      delay: 200,
-    },
-    {
-      icon: <MapPin className="h-5 w-5 text-blue-500" />,
-      title: t.contact.location,
-      content: "São Paulo, Brasil",
-      delay: 300,
-    },
-  ]
+  const contactItems = useMemo(
+    () => [
+      {
+        icon: <Phone className="h-5 w-5 text-blue-500" />,
+        title: t.phone,
+        content: "+55 (11) 9 8608-0044",
+        delay: 0,
+      },
+      {
+        icon: <Mail className="h-5 w-5 text-blue-500" />,
+        title: t.email,
+        content: "dev.rezendevitor@gmail.com",
+        delay: 100,
+      },
+      {
+        icon: <Github className="h-5 w-5 text-blue-500" />,
+        title: t.portfolio,
+        content: (
+          <Link
+            href="https://ctorum.github.io/portfolio"
+            target="_blank"
+            className="text-zinc-100 flex items-center hover:text-blue-400 transition-colors"
+          >
+            ctorum.github.io/portfolio <ExternalLink className="ml-1 h-3 w-3" />
+          </Link>
+        ),
+        delay: 200,
+      },
+      {
+        icon: <MapPin className="h-5 w-5 text-blue-500" />,
+        title: t.location,
+        content: "São Paulo, Brasil",
+        delay: 300,
+      },
+    ],
+    [t.phone, t.email, t.portfolio, t.location],
+  )
 
   return (
     <section
@@ -54,7 +73,7 @@ export default function Contact() {
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12 text-center">
-          <span className="text-blue-500">&lt;</span> {t.contact.title} <span className="text-blue-500">/&gt;</span>
+          <span className="text-blue-500">&lt;</span> {t.title} <span className="text-blue-500">/&gt;</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -84,11 +103,11 @@ export default function Contact() {
             }`}
             style={{ transitionDelay: "400ms" }}
           >
-            <h3 className="text-xl font-semibold mb-4">{t.contact.formTitle}</h3>
+            <h3 className="text-xl font-semibold mb-4">{t.formTitle}</h3>
             <form className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm text-zinc-400 mb-1">
-                  {t.contact.nameLabel}
+                  {t.nameLabel}
                 </label>
                 <input
                   type="text"
@@ -98,7 +117,7 @@ export default function Contact() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm text-zinc-400 mb-1">
-                  {t.contact.emailLabel}
+                  {t.emailLabel}
                 </label>
                 <input
                   type="email"
@@ -108,7 +127,7 @@ export default function Contact() {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm text-zinc-400 mb-1">
-                  {t.contact.messageLabel}
+                  {t.messageLabel}
                 </label>
                 <textarea
                   id="message"
@@ -117,7 +136,7 @@ export default function Contact() {
                 ></textarea>
               </div>
               <Button className="w-full bg-blue-600 hover:bg-blue-700 transition-transform hover:scale-105">
-                {t.contact.sendButton}
+                {t.sendButton}
               </Button>
             </form>
           </div>
