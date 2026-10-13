@@ -11,6 +11,8 @@ const PHOTO =
 const EMAIL = "dev.rezendevitor@gmail.com"
 const PHONE = { label: "+55 (11) 9 8608-0044", href: "tel:+5511986080044" }
 const SITE = { label: "ctorum.github.io/portfolio", href: "https://ctorum.github.io/portfolio" }
+// Set to { label: "linkedin.com/in/...", href: "https://..." } to show LinkedIn here and in the terminal.
+const LINKEDIN: { label: string; href: string } | null = { label: "linkedin.com/in/rezvitor", href: "https://www.linkedin.com/in/rezvitor/" }
 const GITHUB = { label: "github.com/Ctorum", href: "https://github.com/Ctorum" }
 
 // Tech names are language-neutral. `core` ones are set heavier.
@@ -28,15 +30,17 @@ const skills: { key: keyof T["skills"]["categories"]; items: string[]; core?: st
   { key: "tools", items: ["Git", "Linux (Arch)"] },
 ]
 
-const projectTags = [
-  ["Python", "FastAPI", "PostgreSQL", "Redis Streams", "Docker"],
-  ["AWS", "Serverless", "TypeScript", "Node.js"],
-  ["React Native", "Expo", "JavaScript", "Firebase"],
-  ["Python", "TensorFlow", "GCP"],
-  ["Next.js", "Tailwind", "Node.js", "MongoDB"],
-  ["Terraform", "AWS", "CI/CD", "Python"],
-  ["Docker", "Kubernetes", "Node.js"],
-] as const
+type ProjectKey = Exclude<keyof T["projects"], "title">
+// Tags and links live with the project key. Add `href` (source or demo) to link a title.
+const projectList: { key: ProjectKey; tags: string[]; href?: string }[] = [
+  { key: "fidcEvaluator", tags: ["Python", "FastAPI", "PostgreSQL", "Redis Streams", "Docker"] },
+  { key: "serverlessApi", tags: ["AWS", "Serverless", "TypeScript", "Node.js"] },
+  { key: "mobileEcommerce", tags: ["React Native", "Expo", "JavaScript", "Firebase"] },
+  { key: "aiRecommendation", tags: ["Python", "TensorFlow", "GCP"] },
+  { key: "realEstate", tags: ["Next.js", "Tailwind", "Node.js", "MongoDB"] },
+  { key: "devOps", tags: ["Terraform", "AWS", "CI/CD", "Python"] },
+  { key: "microservices", tags: ["Docker", "Kubernetes", "Node.js"] },
+]
 
 function Section({
   id,
@@ -93,15 +97,7 @@ export default function Portfolio({ lang, t }: { lang: "en" | "pt"; t: T }) {
     { name: t.education.unasp.institution, degree: t.education.unasp.degreeHighSchool, when: t.education.unasp.periodHighSchool },
     { name: t.education.rocketseat.institution, degree: t.education.rocketseat.degree, when: t.education.rocketseat.period },
   ]
-  const projects = [
-    t.projects.fidcEvaluator,
-    t.projects.serverlessApi,
-    t.projects.mobileEcommerce,
-    t.projects.aiRecommendation,
-    t.projects.realEstate,
-    t.projects.devOps,
-    t.projects.microservices,
-  ]
+  const projects = projectList.map((p) => ({ ...t.projects[p.key], tags: p.tags, href: p.href }))
   const short = (p: string) => {
     const y = p.match(/\d{4}/g) ?? []
     const end = /Present|Presente/.test(p) ? (lang === "pt" ? "agora" : "now") : y[1]
@@ -118,6 +114,7 @@ export default function Portfolio({ lang, t }: { lang: "en" | "pt"; t: T }) {
     learning: t.terminal.learning,
     email: EMAIL,
     github: GITHUB.label,
+    linkedin: LINKEDIN?.label,
     s: t.terminal,
   }
   const nav = [
@@ -257,9 +254,17 @@ export default function Portfolio({ lang, t }: { lang: "en" | "pt"; t: T }) {
               <li key={p.title} className="group grid gap-x-8 gap-y-2 py-8 sm:grid-cols-[3rem_1fr]">
                 <span className="meta pt-2 transition-colors group-hover:text-accent">{String(i + 1).padStart(2, "0")}</span>
                 <div>
-                  <h3 className="text-2xl font-medium tracking-tight md:text-3xl">{p.title}</h3>
+                  <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
+                    {p.href ? (
+                      <a href={p.href} className="ulink" rel="noopener">
+                        {p.title} ↗
+                      </a>
+                    ) : (
+                      p.title
+                    )}
+                  </h3>
                   <p className="mt-2 max-w-[60ch] text-mute">{p.description}</p>
-                  <p className="meta mt-3">{projectTags[i].join(", ")}</p>
+                  <p className="meta mt-3">{p.tags.join(", ")}</p>
                 </div>
               </li>
             ))}
@@ -296,6 +301,16 @@ export default function Portfolio({ lang, t }: { lang: "en" | "pt"; t: T }) {
                 </a>
               </dd>
             </div>
+            {LINKEDIN && (
+              <div>
+                <dt className="meta uppercase">LinkedIn</dt>
+                <dd>
+                  <a href={LINKEDIN.href} className="ulink" rel="noopener">
+                    {LINKEDIN.label}
+                  </a>
+                </dd>
+              </div>
+            )}
             <div>
               <dt className="meta uppercase">{t.contact.portfolio}</dt>
               <dd>

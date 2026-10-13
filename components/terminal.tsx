@@ -16,6 +16,7 @@ export interface TerminalData {
   learning: string[]
   email: string
   github: string
+  linkedin?: string
   s: {
     inputLabel: string
     helpTitle: string
@@ -50,7 +51,11 @@ export default function Terminal({ d }: { d: TerminalData }) {
       "projects --count": out(`${d.projects.length} ${s.projectsCount}`),
       projects: out(...d.projects.map((p, i) => `${String(i + 1).padStart(2, "0")} ${p}`)),
       learning: out(...d.learning),
-      contact: out([d.email, `mailto:${d.email}`], [d.github, `https://${d.github}`]),
+      contact: out(
+        [d.email, `mailto:${d.email}`],
+        [d.github, `https://${d.github}`],
+        ...(d.linkedin ? [[d.linkedin, `https://${d.linkedin}`] as [string, string]] : []),
+      ),
       help: out(s.helpTitle, ...Object.entries(s.help).map(([k, v]) => `  ${k.padEnd(11)} ${v}`)),
     }
   }, [d, s])
@@ -63,6 +68,7 @@ export default function Terminal({ d }: { d: TerminalData }) {
   const [typing, setTyping] = useState<string | null>(null)
   const [done, setDone] = useState(true)
   const skip = useRef(false)
+  const wake = useRef<(() => void) | null>(null)
   const logRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const history = useRef<string[]>([])
@@ -73,7 +79,18 @@ export default function Terminal({ d }: { d: TerminalData }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     let dead = false
     skip.current = false
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, skip.current ? 0 : ms))
+    // Pending pauses end immediately when skip is requested.
+    const sleep = (ms: number) =>
+      new Promise<void>((r) => {
+        if (skip.current) return r()
+        const t = setTimeout(r, ms)
+        wake.current = () => {
+          clearTimeout(t)
+          r()
+        }
+      })
+    // Replay on mount: server HTML is the finished transcript, so reset it here.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLines([])
     setTyping("")
     setDone(false)
@@ -104,7 +121,11 @@ export default function Terminal({ d }: { d: TerminalData }) {
   // Only a deliberate gesture skips: Escape, or a click inside the terminal.
   useEffect(() => {
     if (done) return
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && (skip.current = true)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return
+      skip.current = true
+      wake.current?.()
+    }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [done])
@@ -146,7 +167,11 @@ export default function Terminal({ d }: { d: TerminalData }) {
     <div>
       <div
         className="border bg-well"
-        onClickCapture={() => !done && (skip.current = true)}
+        onClickCapture={() => {
+          if (done) return
+          skip.current = true
+          wake.current?.()
+        }}
         onClick={() => done && !window.getSelection()?.toString() && inputRef.current?.focus()}
       >
         {!done && (
@@ -210,7 +235,7 @@ export default function Terminal({ d }: { d: TerminalData }) {
                 autoComplete="off"
                 autoCorrect="off"
                 spellCheck={false}
-                className="min-w-0 flex-1 bg-transparent pl-1 text-ink caret-accent outline-none"
+                className="min-w-0 flex-1 bg-transparent pl-1 text-ink caret-accent"
               />
             </form>
           )}

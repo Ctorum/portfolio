@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
@@ -13,11 +12,6 @@ interface SiteHeaderProps {
 export default function SiteHeader({ lang, nav }: SiteHeaderProps) {
   const { resolvedTheme, setTheme } = useTheme()
   const other = lang === "en" ? "pt" : "en"
-
-  // Root layout is shared by both locales, so set the document language here.
-  useEffect(() => {
-    document.documentElement.lang = lang === "pt" ? "pt-BR" : "en"
-  }, [lang])
 
   return (
     <header className="sticky top-0 z-40 border-b bg-paper">
