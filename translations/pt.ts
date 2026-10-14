@@ -49,6 +49,11 @@ export const pt = {
   },
   projects: {
     title: "Projetos",
+    fidcEvaluator: {
+      title: "Plataforma de Avaliação de Crédito FIDC",
+      description:
+        "Fluxo automatizado de avaliação de crédito para fundos de recebíveis: um pipeline orientado a eventos confere cada ativo contra as regras de elegibilidade de cada fundo, precifica o lote e acompanha cada etapa em tempo real. APIs REST publicadas permitem que originadores terceiros enviem dados para avaliação.",
+    },
     serverlessApi: {
       title: "Framework de API Serverless",
       description: "Um framework de API serverless escalável usando AWS Lambda, API Gateway e DynamoDB com TypeScript.",
@@ -94,20 +99,30 @@ export const pt = {
     copyright: "Todos os direitos reservados.",
   },
   companies: {
-    mbras: {
-      name: "MBRAS Soluções Imobiliárias",
+    riza: {
+      name: "Riza Asset Management",
       position: "Engenheiro de Software",
-      period: "Dezembro 2023 - Presente",
+      period: "Junho 2025 - Presente",
       responsibilities: [
-        "Desenvolvimento de API Serverless na AWS e Google Cloud, usando Node.js e Python",
-        "Modelagem de banco de dados, criação de modelos de IA com PyTorch e TensorFlow",
-        "Desenvolvimento mobile usando React Native e Expo",
+        "Desenvolvimento de APIs com Google Cloud, usando Python e Go",
+        "Comunicação entre serviços com gRPC (Python e Go)",
+        "Modelagem de banco de dados, criação de modelos de IA com LangGraph",
       ],
     },
     ibvi: {
       name: "IBVI",
       position: "Engenheiro de Software",
-      period: "Dezembro 2023 - Presente",
+      period: "Dezembro 2023 - Fevereiro 2026",
+      responsibilities: [
+        "Desenvolvimento de API Serverless na AWS e Google Cloud, usando Node.js, Python e Go",
+        "Modelagem de banco de dados, criação de modelos de IA com PyTorch e TensorFlow",
+        "Desenvolvimento mobile usando React Native e Expo",
+      ],
+    },
+    mbras: {
+      name: "MBRAS Soluções Imobiliárias",
+      position: "Engenheiro de Software",
+      period: "Dezembro 2023 - Maio 2025",
       responsibilities: [
         "Desenvolvimento de API Serverless na AWS e Google Cloud, usando Node.js e Python",
         "Modelagem de banco de dados, criação de modelos de IA com PyTorch e TensorFlow",
@@ -169,5 +184,24 @@ export const pt = {
       period: "Fevereiro 2020 - Fevereiro 2021",
     },
   },
+  terminal: {
+    inputLabel: "comando",
+    helpTitle: "comandos:",
+    notFound: "comando não encontrado:",
+    tryHelp: "tente help",
+    hint: "Interativo. Tente",
+    skip: "clique no terminal ou pressione Esc para pular",
+    projectsCount: "projetos. rode `projects` para listar",
+    help: {
+      whoami: "quem eu sou",
+      skills: "com o que trabalho",
+      experience: "onde já trabalhei",
+      projects: "o que já construí",
+      learning: "o que estou aprendendo agora",
+      contact: "como falar comigo",
+      lang: "trocar idioma",
+      clear: "limpar a tela",
+    },
+    learning: ["Elixir", "Rust"],
+  },
 }
-

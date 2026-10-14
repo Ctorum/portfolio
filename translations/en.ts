@@ -49,6 +49,11 @@ export const en = {
   },
   projects: {
     title: "Projects",
+    fidcEvaluator: {
+      title: "FIDC Credit Evaluation Platform",
+      description:
+        "Automated credit evaluation workflow for receivables funds: an event-driven pipeline checks each asset against per-fund eligibility rules, prices the batch, and tracks every step in real time. Published REST APIs let third-party originators send data in for evaluation.",
+    },
     serverlessApi: {
       title: "Serverless API Framework",
       description: "A scalable serverless API framework using AWS Lambda, API Gateway, and DynamoDB with TypeScript.",
@@ -95,20 +100,30 @@ export const en = {
     copyright: "All rights reserved.",
   },
   companies: {
-    mbras: {
-      name: "MBRAS Soluções Imobiliárias",
+    riza: {
+      name: "Riza Asset Management",
       position: "Software Engineer",
-      period: "December 2023 - Present",
+      period: "June 2025 - Present",
       responsibilities: [
-        "Serverless API development on AWS and Google Cloud, using Node.js and Python",
-        "Database modeling, creating AI models with PyTorch and TensorFlow",
-        "Mobile development using React Native and Expo",
+        "API development with Google Cloud, using Python and Go",
+        "Service-to-service communication with gRPC (Python and Go)",
+        "Database modeling, creating AI models with LangGraph",
       ],
     },
     ibvi: {
       name: "IBVI",
       position: "Software Engineer",
-      period: "December 2023 - Present",
+      period: "December 2023 - February 2026",
+      responsibilities: [
+        "Serverless API development on AWS and Google Cloud, using Node.js, Python and Go",
+        "Database modeling, creating AI models with PyTorch and TensorFlow",
+        "Mobile development using React Native and Expo",
+      ],
+    },
+    mbras: {
+      name: "MBRAS Soluções Imobiliárias",
+      position: "Software Engineer",
+      period: "December 2023 - May 2025",
       responsibilities: [
         "Serverless API development on AWS and Google Cloud, using Node.js and Python",
         "Database modeling, creating AI models with PyTorch and TensorFlow",
@@ -170,5 +185,24 @@ export const en = {
       period: "February 2020 - February 2021",
     },
   },
+  terminal: {
+    inputLabel: "command",
+    helpTitle: "commands:",
+    notFound: "command not found:",
+    tryHelp: "try help",
+    hint: "Interactive. Try",
+    skip: "click the terminal or press Esc to skip",
+    projectsCount: "projects. run `projects` to list them",
+    help: {
+      whoami: "who I am",
+      skills: "what I work with",
+      experience: "where I have worked",
+      projects: "what I have built",
+      learning: "what I am learning now",
+      contact: "how to reach me",
+      lang: "switch language",
+      clear: "clear the screen",
+    },
+    learning: ["Elixir", "Rust"],
+  },
 }
-
